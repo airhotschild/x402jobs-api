@@ -1,0 +1,258 @@
+{
+  "job": {
+    "id": "defi-yield-optimizer-v1",
+    "name": "DeFi Yield Optimizer",
+    "version": "1.0.0",
+    "description": "Find the best yield farming opportunities across multiple DeFi protocols with risk-adjusted returns",
+    "category": "defi-tools",
+    "author": {
+      "name": "@airhotschild",
+      "wallet": "8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw",
+      "contact": "airhotschild@gmail.com",
+      "twitter": "https://twitter.com/airhotschild",
+      "github": "https://github.com/airhotschild"
+    },
+    "pricing": {
+      "scheme": "exact",
+      "amount": "0.10",
+      "currency": "USDC",
+      "network": "solana-mainnet"
+    },
+    "endpoint": {
+      "method": "POST",
+      "url": "https://your-api.com/yield-optimizer",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["token_type", "amount"],
+      "properties": {
+        "token_type": {
+          "type": "string",
+          "description": "Token symbol (USDC, SOL, ETH, etc)",
+          "example": "USDC"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount to invest",
+          "minimum": 100,
+          "example": 10000
+        },
+        "risk_tolerance": {
+          "type": "string",
+          "enum": ["conservative", "moderate", "aggressive"],
+          "default": "moderate",
+          "description": "Risk tolerance level"
+        },
+        "min_apy": {
+          "type": "number",
+          "default": 5,
+          "description": "Minimum acceptable APY %"
+        },
+        "max_protocols": {
+          "type": "number",
+          "default": 5,
+          "description": "Max number of recommendations"
+        },
+        "exclude_protocols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Protocols to exclude from results",
+          "example": ["protocol-x", "protocol-y"]
+        },
+        "include_impermanent_loss": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include IL risk in calculations"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol name"
+              },
+              "pool": {
+                "type": "string",
+                "description": "Pool identifier"
+              },
+              "apy": {
+                "type": "number",
+                "description": "Annual Percentage Yield"
+              },
+              "apy_breakdown": {
+                "type": "object",
+                "properties": {
+                  "base_apy": {
+                    "type": "number"
+                  },
+                  "reward_apy": {
+                    "type": "number"
+                  },
+                  "token_emissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "apy_contribution": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "tvl": {
+                "type": "number",
+                "description": "Total Value Locked in USD"
+              },
+              "risk_score": {
+                "type": "number",
+                "description": "Risk score 0-100 (lower is safer)",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "risk_factors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Identified risk factors"
+              },
+              "impermanent_loss_risk": {
+                "type": "string",
+                "enum": ["none", "low", "medium", "high"],
+                "description": "IL risk level"
+              },
+              "estimated_daily_earn": {
+                "type": "number",
+                "description": "Estimated daily earnings in USD"
+              },
+              "estimated_monthly_earn": {
+                "type": "number",
+                "description": "Estimated monthly earnings in USD"
+              },
+              "estimated_yearly_earn": {
+                "type": "number",
+                "description": "Estimated yearly earnings in USD"
+              },
+              "required_tokens": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "entry_instructions": {
+                "type": "string",
+                "description": "How to enter this position"
+              },
+              "exit_liquidity": {
+                "type": "string",
+                "enum": ["instant", "1-day", "7-day", "30-day", "locked"],
+                "description": "How quickly you can exit"
+              },
+              "protocol_audit": {
+                "type": "boolean",
+                "description": "Protocol has been audited"
+              },
+              "time_in_market": {
+                "type": "number",
+                "description": "Days protocol has been live"
+              }
+            }
+          }
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "total_opportunities": {
+              "type": "number"
+            },
+            "highest_apy": {
+              "type": "number"
+            },
+            "safest_option": {
+              "type": "string"
+            },
+            "recommended_option": {
+              "type": "string",
+              "description": "Best risk-adjusted recommendation"
+            }
+          }
+        },
+        "market_context": {
+          "type": "object",
+          "properties": {
+            "current_market_sentiment": {
+              "type": "string",
+              "enum": ["bullish", "neutral", "bearish"]
+            },
+            "volatility_index": {
+              "type": "number"
+            },
+            "recommended_strategy": {
+              "type": "string"
+            }
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "execution": {
+      "timeout": 20,
+      "retry": 2,
+      "cache_ttl": 300
+    },
+    "tags": ["defi", "yield-farming", "apy", "liquidity-pools", "passive-income"],
+    "use_cases": [
+      "Yield farming optimization",
+      "Portfolio rebalancing",
+      "Passive income maximization",
+      "Risk-adjusted DeFi allocation"
+    ],
+    "rate_limits": {
+      "per_minute": 20,
+      "per_hour": 200,
+      "per_day": 2000
+    },
+    "documentation": {
+      "quick_start": "Provide token type, amount, and risk tolerance to get top yield opportunities ranked by risk-adjusted returns",
+      "example_curl": "curl -X POST https://your-api.com/yield-optimizer -H 'Content-Type: application/json' -d '{\"token_type\":\"USDC\",\"amount\":10000,\"risk_tolerance\":\"moderate\"}'",
+      "response_time": "Average 10-15 seconds",
+      "data_sources": ["DeFi Llama", "Protocol APIs", "On-chain analytics", "Historical APY data"],
+      "disclaimer": "APY values are estimates and subject to change. Past performance doesn't guarantee future results. Always DYOR."
+    }
+  },
+  "x402_config": {
+    "payment_required": true,
+    "facilitator": "https://x402.org/facilitator",
+    "accept_networks": ["solana-mainnet", "base-mainnet"],
+    "accept_currencies": ["USDC"],
+    "settlement_type": "instant"
+  }
+}
