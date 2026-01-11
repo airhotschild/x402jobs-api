@@ -20,8 +20,8 @@ aiohttp==3.9.1
 python-dotenv==1.0.0
 
 # Optional: Solana integration (when ready)
-solana==0.30.2
-solders==0.18.1
+# solana==0.30.2
+# solders==0.18.1
 
 # Optional: Database (if you want to cache data)
 # sqlalchemy==2.0.25
