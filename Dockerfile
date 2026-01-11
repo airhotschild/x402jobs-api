@@ -7,10 +7,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application
-COPY x402jobs_api.py .
+COPY . .
 
-# Expose port
+# Expose port (not strictly necessary for Railway but good practice)
 EXPOSE 8000
 
 # Run the application
-CMD ["uvicorn", "x402jobs_api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
