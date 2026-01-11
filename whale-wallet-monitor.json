@@ -20,18 +20,25 @@
     },
     "endpoint": {
       "method": "POST",
-      "url": "https://your-api.com/whale-monitor",
+      "url": "https://x402jobs-api-production.up.railway.app/whale-monitor",
       "headers": {
         "Content-Type": "application/json"
       }
     },
     "input": {
       "type": "object",
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "properties": {
         "action": {
           "type": "string",
-          "enum": ["track_wallet", "recent_movements", "holding_analysis", "pattern_detection"],
+          "enum": [
+            "track_wallet",
+            "recent_movements",
+            "holding_analysis",
+            "pattern_detection"
+          ],
           "description": "Type of whale monitoring action"
         },
         "wallet_address": {
@@ -51,7 +58,13 @@
         },
         "time_range": {
           "type": "string",
-          "enum": ["1h", "6h", "24h", "7d", "30d"],
+          "enum": [
+            "1h",
+            "6h",
+            "24h",
+            "7d",
+            "30d"
+          ],
           "default": "24h",
           "description": "Time range for analysis"
         },
@@ -106,7 +119,12 @@
               },
               "type": {
                 "type": "string",
-                "enum": ["buy", "sell", "transfer", "swap"]
+                "enum": [
+                  "buy",
+                  "sell",
+                  "transfer",
+                  "swap"
+                ]
               },
               "token": {
                 "type": "string"
@@ -215,7 +233,14 @@
             },
             "strategy_classification": {
               "type": "string",
-              "enum": ["hodler", "swing_trader", "day_trader", "sniper", "arbitrage", "unknown"],
+              "enum": [
+                "hodler",
+                "swing_trader",
+                "day_trader",
+                "sniper",
+                "arbitrage",
+                "unknown"
+              ],
               "description": "Detected trading strategy"
             }
           }
@@ -252,7 +277,11 @@
             },
             "copy_trade_worthiness": {
               "type": "string",
-              "enum": ["high", "medium", "low"],
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ],
               "description": "Is this wallet worth copying?"
             }
           }
@@ -264,11 +293,21 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["large_buy", "large_sell", "accumulation", "distribution", "unusual_activity"]
+                "enum": [
+                  "large_buy",
+                  "large_sell",
+                  "accumulation",
+                  "distribution",
+                  "unusual_activity"
+                ]
               },
               "severity": {
                 "type": "string",
-                "enum": ["info", "warning", "critical"]
+                "enum": [
+                  "info",
+                  "warning",
+                  "critical"
+                ]
               },
               "message": {
                 "type": "string"
@@ -289,7 +328,11 @@
             },
             "risk_level": {
               "type": "string",
-              "enum": ["low", "medium", "high"],
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
               "description": "Risk of this whale dumping"
             }
           }
@@ -305,7 +348,13 @@
       "retry": 1,
       "cache_ttl": 180
     },
-    "tags": ["whale-tracking", "smart-money", "market-intelligence", "on-chain-analysis", "trading-signals"],
+    "tags": [
+      "whale-tracking",
+      "smart-money",
+      "market-intelligence",
+      "on-chain-analysis",
+      "trading-signals"
+    ],
     "use_cases": [
       "Smart money tracking",
       "Early trend detection",
@@ -320,17 +369,27 @@
     },
     "documentation": {
       "quick_start": "Track whale wallets, analyze their holdings, detect trading patterns, and get real-time alerts on large movements",
-      "example_curl": "curl -X POST https://your-api.com/whale-monitor -H 'Content-Type: application/json' -d '{\"action\":\"track_wallet\",\"wallet_address\":\"9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM\",\"time_range\":\"24h\"}'",
+      "example_curl": "curl -X POST https://x402jobs-api-production.up.railway.app/whale-monitor -H 'Content-Type: application/json' -d '{\"action\":\"track_wallet\",\"wallet_address\":\"9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM\",\"time_range\":\"24h\"}'",
       "response_time": "Average 15-20 seconds",
-      "data_sources": ["On-chain transaction data", "DEX analytics", "Known wallet labels", "Historical pattern matching"],
+      "data_sources": [
+        "On-chain transaction data",
+        "DEX analytics",
+        "Known wallet labels",
+        "Historical pattern matching"
+      ],
       "privacy_note": "All data is from public blockchain. No private information is accessed."
     }
   },
   "x402_config": {
     "payment_required": true,
     "facilitator": "https://x402.org/facilitator",
-    "accept_networks": ["solana-mainnet", "base-mainnet"],
-    "accept_currencies": ["USDC"],
+    "accept_networks": [
+      "solana-mainnet",
+      "base-mainnet"
+    ],
+    "accept_currencies": [
+      "USDC"
+    ],
     "settlement_type": "instant"
   }
 }

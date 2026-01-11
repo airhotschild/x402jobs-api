@@ -49,7 +49,7 @@ pip install -r requirements.txt
 python x402jobs_api.py
 ```
 
-API is now running at: http://localhost:8000
+API is now running at: https://x402jobs-api-production.up.railway.app
 
 ### 3. Test
 
@@ -83,7 +83,7 @@ POST /token-launches    # Launch Detector ($0.08)
 
 ### NFT Floor Price
 ```bash
-curl -X POST http://localhost:8000/nft-floor \
+curl -X POST https://x402jobs-api-production.up.railway.app/nft-floor \
   -H "Content-Type: application/json" \
   -d '{
     "collection_address": "J1S9H3QjnRtBbbuD4HjPV6RpRhwuk4zKbxsnCHuTgh9w",
@@ -93,7 +93,7 @@ curl -X POST http://localhost:8000/nft-floor \
 
 ### Token Safety Check
 ```bash
-curl -X POST http://localhost:8000/token-safety \
+curl -X POST https://x402jobs-api-production.up.railway.app/token-safety \
   -H "Content-Type: application/json" \
   -d '{
     "token_address": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",

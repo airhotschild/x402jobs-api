@@ -20,24 +20,37 @@
     },
     "endpoint": {
       "method": "POST",
-      "url": "https://your-api.com/token-launches",
+      "url": "https://x402jobs-api-production.up.railway.app/token-launches",
       "headers": {
         "Content-Type": "application/json"
       }
     },
     "input": {
       "type": "object",
-      "required": ["time_range"],
+      "required": [
+        "time_range"
+      ],
       "properties": {
         "time_range": {
           "type": "string",
-          "enum": ["15m", "1h", "6h", "24h"],
+          "enum": [
+            "15m",
+            "1h",
+            "6h",
+            "24h"
+          ],
           "description": "How far back to scan for launches",
           "example": "1h"
         },
         "blockchain": {
           "type": "string",
-          "enum": ["solana", "base", "ethereum", "bsc", "all"],
+          "enum": [
+            "solana",
+            "base",
+            "ethereum",
+            "bsc",
+            "all"
+          ],
           "default": "solana",
           "description": "Which blockchain(s) to monitor"
         },
@@ -63,7 +76,12 @@
         },
         "sort_by": {
           "type": "string",
-          "enum": ["newest", "liquidity", "safety_score", "potential_score"],
+          "enum": [
+            "newest",
+            "liquidity",
+            "safety_score",
+            "potential_score"
+          ],
           "default": "newest"
         },
         "limit": {
@@ -197,7 +215,12 @@
                   },
                   "reputation": {
                     "type": "string",
-                    "enum": ["trusted", "neutral", "suspicious", "blacklisted"]
+                    "enum": [
+                      "trusted",
+                      "neutral",
+                      "suspicious",
+                      "blacklisted"
+                    ]
                   }
                 }
               },
@@ -274,11 +297,22 @@
                   },
                   "social_engagement": {
                     "type": "string",
-                    "enum": ["none", "low", "medium", "high", "viral"]
+                    "enum": [
+                      "none",
+                      "low",
+                      "medium",
+                      "high",
+                      "viral"
+                    ]
                   },
                   "name_quality": {
                     "type": "string",
-                    "enum": ["poor", "average", "good", "excellent"],
+                    "enum": [
+                      "poor",
+                      "average",
+                      "good",
+                      "excellent"
+                    ],
                     "description": "Catchiness of name/symbol"
                   }
                 }
@@ -306,7 +340,13 @@
                 "properties": {
                   "action": {
                     "type": "string",
-                    "enum": ["strong_buy", "buy", "monitor", "avoid", "scam"],
+                    "enum": [
+                      "strong_buy",
+                      "buy",
+                      "monitor",
+                      "avoid",
+                      "scam"
+                    ],
                     "description": "Recommended action"
                   },
                   "confidence": {
@@ -386,7 +426,14 @@
       "retry": 2,
       "cache_ttl": 60
     },
-    "tags": ["token-launch", "new-listings", "memecoin", "sniper", "early-entry", "dex-monitoring"],
+    "tags": [
+      "token-launch",
+      "new-listings",
+      "memecoin",
+      "sniper",
+      "early-entry",
+      "dex-monitoring"
+    ],
     "use_cases": [
       "Sniper bot feed",
       "Early investment opportunities",
@@ -401,9 +448,14 @@
     },
     "documentation": {
       "quick_start": "Scan for new token launches in last 1 hour with safety filtering enabled to find legitimate early opportunities",
-      "example_curl": "curl -X POST https://your-api.com/token-launches -H 'Content-Type: application/json' -d '{\"time_range\":\"1h\",\"blockchain\":\"solana\",\"min_liquidity_usd\":5000,\"safety_filter\":true}'",
+      "example_curl": "curl -X POST https://x402jobs-api-production.up.railway.app/token-launches -H 'Content-Type: application/json' -d '{\"time_range\":\"1h\",\"blockchain\":\"solana\",\"min_liquidity_usd\":5000,\"safety_filter\":true}'",
       "response_time": "Average 20-25 seconds",
-      "data_sources": ["DEX APIs (Raydium, Jupiter, etc)", "On-chain transaction monitoring", "Social media scanning", "Known creator database"],
+      "data_sources": [
+        "DEX APIs (Raydium, Jupiter, etc)",
+        "On-chain transaction monitoring",
+        "Social media scanning",
+        "Known creator database"
+      ],
       "update_frequency": "Real-time monitoring with 60s cache",
       "disclaimer": "Extreme risk! New launches are highly volatile. Most fail. Only invest what you can afford to lose. DYOR always!"
     }
@@ -411,8 +463,13 @@
   "x402_config": {
     "payment_required": true,
     "facilitator": "https://x402.org/facilitator",
-    "accept_networks": ["solana-mainnet", "base-mainnet"],
-    "accept_currencies": ["USDC"],
+    "accept_networks": [
+      "solana-mainnet",
+      "base-mainnet"
+    ],
+    "accept_currencies": [
+      "USDC"
+    ],
     "settlement_type": "instant"
   }
 }

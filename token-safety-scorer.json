@@ -20,14 +20,16 @@
     },
     "endpoint": {
       "method": "POST",
-      "url": "https://your-api.com/token-safety",
+      "url": "https://x402jobs-api-production.up.railway.app/token-safety",
       "headers": {
         "Content-Type": "application/json"
       }
     },
     "input": {
       "type": "object",
-      "required": ["token_address"],
+      "required": [
+        "token_address"
+      ],
       "properties": {
         "token_address": {
           "type": "string",
@@ -36,7 +38,12 @@
         },
         "blockchain": {
           "type": "string",
-          "enum": ["solana", "ethereum", "base", "bsc"],
+          "enum": [
+            "solana",
+            "ethereum",
+            "base",
+            "bsc"
+          ],
           "default": "solana",
           "description": "Blockchain network"
         },
@@ -58,7 +65,13 @@
         },
         "risk_level": {
           "type": "string",
-          "enum": ["SAFE", "LOW_RISK", "MEDIUM_RISK", "HIGH_RISK", "EXTREME_RISK"],
+          "enum": [
+            "SAFE",
+            "LOW_RISK",
+            "MEDIUM_RISK",
+            "HIGH_RISK",
+            "EXTREME_RISK"
+          ],
           "description": "Overall risk assessment"
         },
         "checks": {
@@ -154,7 +167,13 @@
       "retry": 1,
       "cache_ttl": 600
     },
-    "tags": ["security", "token-analysis", "rugpull-detection", "honeypot", "defi"],
+    "tags": [
+      "security",
+      "token-analysis",
+      "rugpull-detection",
+      "honeypot",
+      "defi"
+    ],
     "use_cases": [
       "Pre-purchase token screening",
       "Automated trading bot safety checks",
@@ -168,7 +187,7 @@
     },
     "documentation": {
       "quick_start": "Send token address to get comprehensive safety analysis including honeypot detection, liquidity checks, and holder distribution",
-      "example_curl": "curl -X POST https://your-api.com/token-safety -H 'Content-Type: application/json' -d '{\"token_address\":\"7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU\",\"blockchain\":\"solana\"}'",
+      "example_curl": "curl -X POST https://x402jobs-api-production.up.railway.app/token-safety -H 'Content-Type: application/json' -d '{\"token_address\":\"7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU\",\"blockchain\":\"solana\"}'",
       "response_time": "Average 5-10 seconds (deep scan: 15-20s)",
       "accuracy_note": "Analysis based on contract code, on-chain data, and historical patterns. Not financial advice."
     }
@@ -176,8 +195,13 @@
   "x402_config": {
     "payment_required": true,
     "facilitator": "https://x402.org/facilitator",
-    "accept_networks": ["solana-mainnet", "base-mainnet"],
-    "accept_currencies": ["USDC"],
+    "accept_networks": [
+      "solana-mainnet",
+      "base-mainnet"
+    ],
+    "accept_currencies": [
+      "USDC"
+    ],
     "settlement_type": "instant"
   }
 }

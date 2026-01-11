@@ -7,8 +7,8 @@ import requests
 import json
 from datetime import datetime
 
-# API Base URL (değiştir!)
-BASE_URL = "http://localhost:8000"
+# API Base URL
+BASE_URL = "https://x402jobs-api-production.up.railway.app"
 
 def print_test_header(test_name):
     print("\n" + "="*60)

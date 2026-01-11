@@ -20,14 +20,16 @@
     },
     "endpoint": {
       "method": "POST",
-      "url": "https://your-api.com/nft-floor",
+      "url": "https://x402jobs-api-production.up.railway.app/nft-floor",
       "headers": {
         "Content-Type": "application/json"
       }
     },
     "input": {
       "type": "object",
-      "required": ["collection_address"],
+      "required": [
+        "collection_address"
+      ],
       "properties": {
         "collection_address": {
           "type": "string",
@@ -36,7 +38,12 @@
         },
         "marketplace": {
           "type": "string",
-          "enum": ["magic-eden", "tensor", "opensea", "all"],
+          "enum": [
+            "magic-eden",
+            "tensor",
+            "opensea",
+            "all"
+          ],
           "default": "all",
           "description": "Specific marketplace or all"
         },
@@ -93,7 +100,13 @@
       "retry": 2,
       "cache_ttl": 300
     },
-    "tags": ["nft", "analytics", "floor-price", "solana", "real-time"],
+    "tags": [
+      "nft",
+      "analytics",
+      "floor-price",
+      "solana",
+      "real-time"
+    ],
     "use_cases": [
       "NFT trading bots",
       "Portfolio trackers",
@@ -107,16 +120,26 @@
     },
     "documentation": {
       "quick_start": "Simple POST request with collection address to get real-time floor price data",
-      "example_curl": "curl -X POST https://your-api.com/nft-floor -H 'Content-Type: application/json' -d '{\"collection_address\":\"J1S9H3QjnRtBbbuD4HjPV6RpRhwuk4zKbxsnCHuTgh9w\"}'",
+      "example_curl": "curl -X POST https://x402jobs-api-production.up.railway.app/nft-floor -H 'Content-Type: application/json' -d '{\"collection_address\":\"J1S9H3QjnRtBbbuD4HjPV6RpRhwuk4zKbxsnCHuTgh9w\"}'",
       "response_time": "Average 2-5 seconds",
-      "data_sources": ["Magic Eden API", "Tensor API", "OpenSea API", "On-chain data"]
+      "data_sources": [
+        "Magic Eden API",
+        "Tensor API",
+        "OpenSea API",
+        "On-chain data"
+      ]
     }
   },
   "x402_config": {
     "payment_required": true,
     "facilitator": "https://x402.org/facilitator",
-    "accept_networks": ["solana-mainnet", "base-mainnet"],
-    "accept_currencies": ["USDC"],
+    "accept_networks": [
+      "solana-mainnet",
+      "base-mainnet"
+    ],
+    "accept_currencies": [
+      "USDC"
+    ],
     "settlement_type": "instant"
   }
 }

@@ -44,7 +44,7 @@ pip install -r requirements.txt
 python x402jobs_api.py
 ```
 
-✅ **API is now running:** http://localhost:8000
+✅ **API is now running:** https://x402jobs-api-production.up.railway.app
 
 ---
 
@@ -52,7 +52,7 @@ python x402jobs_api.py
 
 ### Test 1: API Info
 ```bash
-curl http://localhost:8000/
+curl https://x402jobs-api-production.up.railway.app/
 ```
 
 **Expected Output:**
@@ -74,12 +74,12 @@ curl http://localhost:8000/
 
 ### Test 2: Health Check
 ```bash
-curl http://localhost:8000/health
+curl https://x402jobs-api-production.up.railway.app/health
 ```
 
 ### Test 3: NFT Floor Tracker (NO PAYMENT TEST)
 ```bash
-curl -X POST http://localhost:8000/nft-floor \
+curl -X POST https://x402jobs-api-production.up.railway.app/nft-floor \
   -H "Content-Type: application/json" \
   -d '{
     "collection_address": "test123",

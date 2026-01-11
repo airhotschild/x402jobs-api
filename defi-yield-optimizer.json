@@ -20,14 +20,17 @@
     },
     "endpoint": {
       "method": "POST",
-      "url": "https://your-api.com/yield-optimizer",
+      "url": "https://x402jobs-api-production.up.railway.app/yield-optimizer",
       "headers": {
         "Content-Type": "application/json"
       }
     },
     "input": {
       "type": "object",
-      "required": ["token_type", "amount"],
+      "required": [
+        "token_type",
+        "amount"
+      ],
       "properties": {
         "token_type": {
           "type": "string",
@@ -42,7 +45,11 @@
         },
         "risk_tolerance": {
           "type": "string",
-          "enum": ["conservative", "moderate", "aggressive"],
+          "enum": [
+            "conservative",
+            "moderate",
+            "aggressive"
+          ],
           "default": "moderate",
           "description": "Risk tolerance level"
         },
@@ -62,7 +69,10 @@
             "type": "string"
           },
           "description": "Protocols to exclude from results",
-          "example": ["protocol-x", "protocol-y"]
+          "example": [
+            "protocol-x",
+            "protocol-y"
+          ]
         },
         "include_impermanent_loss": {
           "type": "boolean",
@@ -135,7 +145,12 @@
               },
               "impermanent_loss_risk": {
                 "type": "string",
-                "enum": ["none", "low", "medium", "high"],
+                "enum": [
+                  "none",
+                  "low",
+                  "medium",
+                  "high"
+                ],
                 "description": "IL risk level"
               },
               "estimated_daily_earn": {
@@ -170,7 +185,13 @@
               },
               "exit_liquidity": {
                 "type": "string",
-                "enum": ["instant", "1-day", "7-day", "30-day", "locked"],
+                "enum": [
+                  "instant",
+                  "1-day",
+                  "7-day",
+                  "30-day",
+                  "locked"
+                ],
                 "description": "How quickly you can exit"
               },
               "protocol_audit": {
@@ -207,7 +228,11 @@
           "properties": {
             "current_market_sentiment": {
               "type": "string",
-              "enum": ["bullish", "neutral", "bearish"]
+              "enum": [
+                "bullish",
+                "neutral",
+                "bearish"
+              ]
             },
             "volatility_index": {
               "type": "number"
@@ -228,7 +253,13 @@
       "retry": 2,
       "cache_ttl": 300
     },
-    "tags": ["defi", "yield-farming", "apy", "liquidity-pools", "passive-income"],
+    "tags": [
+      "defi",
+      "yield-farming",
+      "apy",
+      "liquidity-pools",
+      "passive-income"
+    ],
     "use_cases": [
       "Yield farming optimization",
       "Portfolio rebalancing",
@@ -242,17 +273,27 @@
     },
     "documentation": {
       "quick_start": "Provide token type, amount, and risk tolerance to get top yield opportunities ranked by risk-adjusted returns",
-      "example_curl": "curl -X POST https://your-api.com/yield-optimizer -H 'Content-Type: application/json' -d '{\"token_type\":\"USDC\",\"amount\":10000,\"risk_tolerance\":\"moderate\"}'",
+      "example_curl": "curl -X POST https://x402jobs-api-production.up.railway.app/yield-optimizer -H 'Content-Type: application/json' -d '{\"token_type\":\"USDC\",\"amount\":10000,\"risk_tolerance\":\"moderate\"}'",
       "response_time": "Average 10-15 seconds",
-      "data_sources": ["DeFi Llama", "Protocol APIs", "On-chain analytics", "Historical APY data"],
+      "data_sources": [
+        "DeFi Llama",
+        "Protocol APIs",
+        "On-chain analytics",
+        "Historical APY data"
+      ],
       "disclaimer": "APY values are estimates and subject to change. Past performance doesn't guarantee future results. Always DYOR."
     }
   },
   "x402_config": {
     "payment_required": true,
     "facilitator": "https://x402.org/facilitator",
-    "accept_networks": ["solana-mainnet", "base-mainnet"],
-    "accept_currencies": ["USDC"],
+    "accept_networks": [
+      "solana-mainnet",
+      "base-mainnet"
+    ],
+    "accept_currencies": [
+      "USDC"
+    ],
     "settlement_type": "instant"
   }
 }
