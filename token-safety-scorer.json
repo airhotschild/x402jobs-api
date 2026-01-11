@@ -1,0 +1,183 @@
+{
+  "job": {
+    "id": "token-safety-scorer-v1",
+    "name": "Token Safety Scorer",
+    "version": "1.0.0",
+    "description": "Comprehensive security analysis for new token launches - detect honeypots, rugpulls, and security risks",
+    "category": "security-analysis",
+    "author": {
+      "name": "@airhotschild",
+      "wallet": "8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw",
+      "contact": "airhotschild@gmail.com",
+      "twitter": "https://twitter.com/airhotschild",
+      "github": "https://github.com/airhotschild"
+    },
+    "pricing": {
+      "scheme": "exact",
+      "amount": "0.05",
+      "currency": "USDC",
+      "network": "solana-mainnet"
+    },
+    "endpoint": {
+      "method": "POST",
+      "url": "https://your-api.com/token-safety",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["token_address"],
+      "properties": {
+        "token_address": {
+          "type": "string",
+          "description": "Token contract address to analyze",
+          "example": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+        },
+        "blockchain": {
+          "type": "string",
+          "enum": ["solana", "ethereum", "base", "bsc"],
+          "default": "solana",
+          "description": "Blockchain network"
+        },
+        "deep_scan": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable deep contract analysis (slower, more thorough)"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "safety_score": {
+          "type": "number",
+          "description": "Overall safety score 0-100 (higher is safer)",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "risk_level": {
+          "type": "string",
+          "enum": ["SAFE", "LOW_RISK", "MEDIUM_RISK", "HIGH_RISK", "EXTREME_RISK"],
+          "description": "Overall risk assessment"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "is_honeypot": {
+              "type": "boolean",
+              "description": "Honeypot detection"
+            },
+            "ownership_renounced": {
+              "type": "boolean",
+              "description": "Contract ownership renounced"
+            },
+            "liquidity_locked": {
+              "type": "boolean",
+              "description": "Liquidity pool locked"
+            },
+            "mint_disabled": {
+              "type": "boolean",
+              "description": "Minting function disabled"
+            },
+            "has_blacklist": {
+              "type": "boolean",
+              "description": "Contains blacklist mechanism"
+            },
+            "has_pausable": {
+              "type": "boolean",
+              "description": "Can be paused by owner"
+            },
+            "proxy_contract": {
+              "type": "boolean",
+              "description": "Is proxy contract (upgradeable)"
+            },
+            "verified_contract": {
+              "type": "boolean",
+              "description": "Contract source verified on explorer"
+            }
+          }
+        },
+        "liquidity_info": {
+          "type": "object",
+          "properties": {
+            "total_liquidity_usd": {
+              "type": "number",
+              "description": "Total liquidity in USD"
+            },
+            "lock_duration_days": {
+              "type": "number",
+              "description": "Liquidity lock duration in days"
+            },
+            "lock_percentage": {
+              "type": "number",
+              "description": "Percentage of liquidity locked"
+            }
+          }
+        },
+        "holder_analysis": {
+          "type": "object",
+          "properties": {
+            "total_holders": {
+              "type": "number",
+              "description": "Total unique holders"
+            },
+            "top_10_ownership_percent": {
+              "type": "number",
+              "description": "% owned by top 10 holders"
+            },
+            "creator_balance_percent": {
+              "type": "number",
+              "description": "% held by creator"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of security warnings"
+        },
+        "recommendation": {
+          "type": "string",
+          "description": "Final recommendation (BUY/HOLD/AVOID)"
+        },
+        "analyzed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "execution": {
+      "timeout": 15,
+      "retry": 1,
+      "cache_ttl": 600
+    },
+    "tags": ["security", "token-analysis", "rugpull-detection", "honeypot", "defi"],
+    "use_cases": [
+      "Pre-purchase token screening",
+      "Automated trading bot safety checks",
+      "Portfolio risk assessment",
+      "Due diligence for new listings"
+    ],
+    "rate_limits": {
+      "per_minute": 30,
+      "per_hour": 500,
+      "per_day": 5000
+    },
+    "documentation": {
+      "quick_start": "Send token address to get comprehensive safety analysis including honeypot detection, liquidity checks, and holder distribution",
+      "example_curl": "curl -X POST https://your-api.com/token-safety -H 'Content-Type: application/json' -d '{\"token_address\":\"7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU\",\"blockchain\":\"solana\"}'",
+      "response_time": "Average 5-10 seconds (deep scan: 15-20s)",
+      "accuracy_note": "Analysis based on contract code, on-chain data, and historical patterns. Not financial advice."
+    }
+  },
+  "x402_config": {
+    "payment_required": true,
+    "facilitator": "https://x402.org/facilitator",
+    "accept_networks": ["solana-mainnet", "base-mainnet"],
+    "accept_currencies": ["USDC"],
+    "settlement_type": "instant"
+  }
+}

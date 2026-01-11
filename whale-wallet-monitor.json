@@ -1,0 +1,336 @@
+{
+  "job": {
+    "id": "whale-wallet-monitor-v1",
+    "name": "Whale Wallet Monitor",
+    "version": "1.0.0",
+    "description": "Track and analyze whale wallet movements, holdings, and trading patterns for market intelligence",
+    "category": "market-intelligence",
+    "author": {
+      "name": "@airhotschild",
+      "wallet": "8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw",
+      "contact": "airhotschild@gmail.com",
+      "twitter": "https://twitter.com/airhotschild",
+      "github": "https://github.com/airhotschild"
+    },
+    "pricing": {
+      "scheme": "exact",
+      "amount": "0.15",
+      "currency": "USDC",
+      "network": "solana-mainnet"
+    },
+    "endpoint": {
+      "method": "POST",
+      "url": "https://your-api.com/whale-monitor",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["track_wallet", "recent_movements", "holding_analysis", "pattern_detection"],
+          "description": "Type of whale monitoring action"
+        },
+        "wallet_address": {
+          "type": "string",
+          "description": "Specific wallet to analyze (required for track_wallet, holding_analysis)",
+          "example": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"
+        },
+        "token_filter": {
+          "type": "string",
+          "description": "Filter by specific token (optional)",
+          "example": "SOL"
+        },
+        "minimum_transaction_usd": {
+          "type": "number",
+          "default": 100000,
+          "description": "Minimum transaction size in USD to track"
+        },
+        "time_range": {
+          "type": "string",
+          "enum": ["1h", "6h", "24h", "7d", "30d"],
+          "default": "24h",
+          "description": "Time range for analysis"
+        },
+        "include_smart_money": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include known smart money addresses"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Executed action type"
+        },
+        "wallet_info": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string",
+              "description": "Wallet label if known (exchange, whale, smart money, etc)"
+            },
+            "age_days": {
+              "type": "number",
+              "description": "Wallet age in days"
+            },
+            "total_balance_usd": {
+              "type": "number"
+            },
+            "wallet_rank": {
+              "type": "number",
+              "description": "Rank by holdings (if tracked)"
+            }
+          }
+        },
+        "recent_transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "transaction_hash": {
+                "type": "string"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["buy", "sell", "transfer", "swap"]
+              },
+              "token": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "number"
+              },
+              "value_usd": {
+                "type": "number"
+              },
+              "counterparty": {
+                "type": "string",
+                "description": "Other wallet involved"
+              },
+              "counterparty_label": {
+                "type": "string"
+              },
+              "price_impact": {
+                "type": "number",
+                "description": "Estimated price impact %"
+              },
+              "interpretation": {
+                "type": "string",
+                "description": "What this transaction likely means"
+              }
+            }
+          }
+        },
+        "holdings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "number"
+              },
+              "value_usd": {
+                "type": "number"
+              },
+              "percentage_of_portfolio": {
+                "type": "number"
+              },
+              "percentage_of_supply": {
+                "type": "number",
+                "description": "% of total token supply held"
+              },
+              "cost_basis_estimate": {
+                "type": "number",
+                "description": "Estimated average buy price"
+              },
+              "unrealized_pnl_usd": {
+                "type": "number"
+              },
+              "unrealized_pnl_percent": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "trading_patterns": {
+          "type": "object",
+          "properties": {
+            "total_transactions": {
+              "type": "number"
+            },
+            "buy_count": {
+              "type": "number"
+            },
+            "sell_count": {
+              "type": "number"
+            },
+            "average_trade_size_usd": {
+              "type": "number"
+            },
+            "win_rate": {
+              "type": "number",
+              "description": "Percentage of profitable trades"
+            },
+            "favorite_tokens": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "trade_count": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "trading_hours": {
+              "type": "object",
+              "properties": {
+                "most_active_hour_utc": {
+                  "type": "number"
+                },
+                "timezone_estimate": {
+                  "type": "string"
+                }
+              }
+            },
+            "strategy_classification": {
+              "type": "string",
+              "enum": ["hodler", "swing_trader", "day_trader", "sniper", "arbitrage", "unknown"],
+              "description": "Detected trading strategy"
+            }
+          }
+        },
+        "smart_money_signals": {
+          "type": "object",
+          "properties": {
+            "is_smart_money": {
+              "type": "boolean"
+            },
+            "confidence": {
+              "type": "number",
+              "description": "Confidence score 0-100"
+            },
+            "recent_wins": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "entry_price": {
+                    "type": "number"
+                  },
+                  "exit_price": {
+                    "type": "number"
+                  },
+                  "profit_percent": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "copy_trade_worthiness": {
+              "type": "string",
+              "enum": ["high", "medium", "low"],
+              "description": "Is this wallet worth copying?"
+            }
+          }
+        },
+        "alerts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["large_buy", "large_sell", "accumulation", "distribution", "unusual_activity"]
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["info", "warning", "critical"]
+              },
+              "message": {
+                "type": "string"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        "market_impact_estimate": {
+          "type": "object",
+          "properties": {
+            "if_wallet_sells_50_percent": {
+              "type": "number",
+              "description": "Estimated price impact % if sells half"
+            },
+            "risk_level": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "Risk of this whale dumping"
+            }
+          }
+        },
+        "analyzed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "execution": {
+      "timeout": 25,
+      "retry": 1,
+      "cache_ttl": 180
+    },
+    "tags": ["whale-tracking", "smart-money", "market-intelligence", "on-chain-analysis", "trading-signals"],
+    "use_cases": [
+      "Smart money tracking",
+      "Early trend detection",
+      "Copy trading intelligence",
+      "Risk monitoring for holdings",
+      "Market manipulation detection"
+    ],
+    "rate_limits": {
+      "per_minute": 10,
+      "per_hour": 100,
+      "per_day": 1000
+    },
+    "documentation": {
+      "quick_start": "Track whale wallets, analyze their holdings, detect trading patterns, and get real-time alerts on large movements",
+      "example_curl": "curl -X POST https://your-api.com/whale-monitor -H 'Content-Type: application/json' -d '{\"action\":\"track_wallet\",\"wallet_address\":\"9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM\",\"time_range\":\"24h\"}'",
+      "response_time": "Average 15-20 seconds",
+      "data_sources": ["On-chain transaction data", "DEX analytics", "Known wallet labels", "Historical pattern matching"],
+      "privacy_note": "All data is from public blockchain. No private information is accessed."
+    }
+  },
+  "x402_config": {
+    "payment_required": true,
+    "facilitator": "https://x402.org/facilitator",
+    "accept_networks": ["solana-mainnet", "base-mainnet"],
+    "accept_currencies": ["USDC"],
+    "settlement_type": "instant"
+  }
+}

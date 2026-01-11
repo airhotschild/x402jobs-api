@@ -1,0 +1,418 @@
+{
+  "job": {
+    "id": "token-launch-detector-v1",
+    "name": "Token Launch Detector",
+    "version": "1.0.0",
+    "description": "Real-time detection of new token launches across multiple DEXs with initial liquidity, safety, and opportunity analysis",
+    "category": "market-discovery",
+    "author": {
+      "name": "@airhotschild",
+      "wallet": "8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw",
+      "contact": "airhotschild@gmail.com",
+      "twitter": "https://twitter.com/airhotschild",
+      "github": "https://github.com/airhotschild"
+    },
+    "pricing": {
+      "scheme": "exact",
+      "amount": "0.08",
+      "currency": "USDC",
+      "network": "solana-mainnet"
+    },
+    "endpoint": {
+      "method": "POST",
+      "url": "https://your-api.com/token-launches",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["time_range"],
+      "properties": {
+        "time_range": {
+          "type": "string",
+          "enum": ["15m", "1h", "6h", "24h"],
+          "description": "How far back to scan for launches",
+          "example": "1h"
+        },
+        "blockchain": {
+          "type": "string",
+          "enum": ["solana", "base", "ethereum", "bsc", "all"],
+          "default": "solana",
+          "description": "Which blockchain(s) to monitor"
+        },
+        "min_liquidity_usd": {
+          "type": "number",
+          "default": 5000,
+          "description": "Minimum initial liquidity in USD"
+        },
+        "max_liquidity_usd": {
+          "type": "number",
+          "default": 1000000,
+          "description": "Maximum initial liquidity (to find early opportunities)"
+        },
+        "safety_filter": {
+          "type": "boolean",
+          "default": true,
+          "description": "Filter out obvious scams/honeypots"
+        },
+        "include_meme_score": {
+          "type": "boolean",
+          "default": true,
+          "description": "Calculate meme potential score"
+        },
+        "sort_by": {
+          "type": "string",
+          "enum": ["newest", "liquidity", "safety_score", "potential_score"],
+          "default": "newest"
+        },
+        "limit": {
+          "type": "number",
+          "default": 20,
+          "maximum": 100,
+          "description": "Max number of results"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "total_launches": {
+          "type": "number",
+          "description": "Total launches found in time range"
+        },
+        "filtered_launches": {
+          "type": "number",
+          "description": "After applying filters"
+        },
+        "launches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "token_address": {
+                "type": "string",
+                "description": "Token contract address"
+              },
+              "token_name": {
+                "type": "string"
+              },
+              "token_symbol": {
+                "type": "string"
+              },
+              "blockchain": {
+                "type": "string"
+              },
+              "launch_timestamp": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "age_minutes": {
+                "type": "number",
+                "description": "How old is the token"
+              },
+              "dex": {
+                "type": "string",
+                "description": "DEX where launched (Raydium, Uniswap, etc)"
+              },
+              "pair_address": {
+                "type": "string",
+                "description": "Liquidity pair contract"
+              },
+              "initial_liquidity": {
+                "type": "object",
+                "properties": {
+                  "usd": {
+                    "type": "number"
+                  },
+                  "base_token": {
+                    "type": "number"
+                  },
+                  "quote_token": {
+                    "type": "number"
+                  }
+                }
+              },
+              "current_price_usd": {
+                "type": "number"
+              },
+              "price_change_since_launch": {
+                "type": "number",
+                "description": "Price change % since launch"
+              },
+              "market_cap_usd": {
+                "type": "number"
+              },
+              "fdv_usd": {
+                "type": "number",
+                "description": "Fully Diluted Valuation"
+              },
+              "volume": {
+                "type": "object",
+                "properties": {
+                  "5m": {
+                    "type": "number"
+                  },
+                  "1h": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                }
+              },
+              "holders": {
+                "type": "number",
+                "description": "Current holder count"
+              },
+              "transactions": {
+                "type": "object",
+                "properties": {
+                  "buys": {
+                    "type": "number"
+                  },
+                  "sells": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                }
+              },
+              "creator_info": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "tokens_created": {
+                    "type": "number"
+                  },
+                  "success_rate": {
+                    "type": "number",
+                    "description": "% of previous tokens that pumped"
+                  },
+                  "is_known_dev": {
+                    "type": "boolean"
+                  },
+                  "reputation": {
+                    "type": "string",
+                    "enum": ["trusted", "neutral", "suspicious", "blacklisted"]
+                  }
+                }
+              },
+              "safety_analysis": {
+                "type": "object",
+                "properties": {
+                  "safety_score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "is_honeypot": {
+                    "type": "boolean"
+                  },
+                  "ownership_renounced": {
+                    "type": "boolean"
+                  },
+                  "liquidity_locked": {
+                    "type": "boolean"
+                  },
+                  "lock_duration_days": {
+                    "type": "number"
+                  },
+                  "mint_disabled": {
+                    "type": "boolean"
+                  },
+                  "red_flags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "opportunity_score": {
+                "type": "object",
+                "properties": {
+                  "overall": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Overall opportunity score"
+                  },
+                  "liquidity_score": {
+                    "type": "number"
+                  },
+                  "volume_score": {
+                    "type": "number"
+                  },
+                  "holder_growth_score": {
+                    "type": "number"
+                  },
+                  "safety_score": {
+                    "type": "number"
+                  }
+                }
+              },
+              "meme_potential": {
+                "type": "object",
+                "properties": {
+                  "score": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "has_website": {
+                    "type": "boolean"
+                  },
+                  "has_twitter": {
+                    "type": "boolean"
+                  },
+                  "has_telegram": {
+                    "type": "boolean"
+                  },
+                  "social_engagement": {
+                    "type": "string",
+                    "enum": ["none", "low", "medium", "high", "viral"]
+                  },
+                  "name_quality": {
+                    "type": "string",
+                    "enum": ["poor", "average", "good", "excellent"],
+                    "description": "Catchiness of name/symbol"
+                  }
+                }
+              },
+              "sniper_activity": {
+                "type": "object",
+                "properties": {
+                  "detected": {
+                    "type": "boolean"
+                  },
+                  "sniper_wallets": {
+                    "type": "number"
+                  },
+                  "percent_bought_by_snipers": {
+                    "type": "number"
+                  },
+                  "interpretation": {
+                    "type": "string",
+                    "description": "What sniper activity means"
+                  }
+                }
+              },
+              "recommendation": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": ["strong_buy", "buy", "monitor", "avoid", "scam"],
+                    "description": "Recommended action"
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "description": "Confidence in recommendation 0-100"
+                  },
+                  "entry_price_suggestion": {
+                    "type": "number"
+                  },
+                  "stop_loss_suggestion": {
+                    "type": "number"
+                  },
+                  "take_profit_targets": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "reasoning": {
+                    "type": "string",
+                    "description": "Why this recommendation"
+                  }
+                }
+              },
+              "links": {
+                "type": "object",
+                "properties": {
+                  "dex_screener": {
+                    "type": "string"
+                  },
+                  "dex_tools": {
+                    "type": "string"
+                  },
+                  "birdeye": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "twitter": {
+                    "type": "string"
+                  },
+                  "telegram": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "market_summary": {
+          "type": "object",
+          "properties": {
+            "total_new_tokens": {
+              "type": "number"
+            },
+            "avg_initial_liquidity": {
+              "type": "number"
+            },
+            "scam_percentage": {
+              "type": "number"
+            },
+            "opportunity_count": {
+              "type": "number",
+              "description": "Tokens with good opportunity scores"
+            }
+          }
+        },
+        "scanned_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "execution": {
+      "timeout": 30,
+      "retry": 2,
+      "cache_ttl": 60
+    },
+    "tags": ["token-launch", "new-listings", "memecoin", "sniper", "early-entry", "dex-monitoring"],
+    "use_cases": [
+      "Sniper bot feed",
+      "Early investment opportunities",
+      "Market trend analysis",
+      "Memecoin hunting",
+      "Scam avoidance"
+    ],
+    "rate_limits": {
+      "per_minute": 30,
+      "per_hour": 300,
+      "per_day": 3000
+    },
+    "documentation": {
+      "quick_start": "Scan for new token launches in last 1 hour with safety filtering enabled to find legitimate early opportunities",
+      "example_curl": "curl -X POST https://your-api.com/token-launches -H 'Content-Type: application/json' -d '{\"time_range\":\"1h\",\"blockchain\":\"solana\",\"min_liquidity_usd\":5000,\"safety_filter\":true}'",
+      "response_time": "Average 20-25 seconds",
+      "data_sources": ["DEX APIs (Raydium, Jupiter, etc)", "On-chain transaction monitoring", "Social media scanning", "Known creator database"],
+      "update_frequency": "Real-time monitoring with 60s cache",
+      "disclaimer": "Extreme risk! New launches are highly volatile. Most fail. Only invest what you can afford to lose. DYOR always!"
+    }
+  },
+  "x402_config": {
+    "payment_required": true,
+    "facilitator": "https://x402.org/facilitator",
+    "accept_networks": ["solana-mainnet", "base-mainnet"],
+    "accept_currencies": ["USDC"],
+    "settlement_type": "instant"
+  }
+}

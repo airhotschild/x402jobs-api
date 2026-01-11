@@ -1,0 +1,122 @@
+{
+  "job": {
+    "id": "nft-floor-tracker-v1",
+    "name": "NFT Floor Price Tracker",
+    "version": "1.0.0",
+    "description": "Real-time floor price tracking for any NFT collection across multiple marketplaces",
+    "category": "nft-analytics",
+    "author": {
+      "name": "@airhotschild",
+      "wallet": "8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw",
+      "contact": "airhotschild@gmail.com",
+      "twitter": "https://twitter.com/airhotschild",
+      "github": "https://github.com/airhotschild"
+    },
+    "pricing": {
+      "scheme": "exact",
+      "amount": "0.02",
+      "currency": "USDC",
+      "network": "solana-mainnet"
+    },
+    "endpoint": {
+      "method": "POST",
+      "url": "https://your-api.com/nft-floor",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["collection_address"],
+      "properties": {
+        "collection_address": {
+          "type": "string",
+          "description": "NFT collection contract address",
+          "example": "J1S9H3QjnRtBbbuD4HjPV6RpRhwuk4zKbxsnCHuTgh9w"
+        },
+        "marketplace": {
+          "type": "string",
+          "enum": ["magic-eden", "tensor", "opensea", "all"],
+          "default": "all",
+          "description": "Specific marketplace or all"
+        },
+        "include_volume": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include 24h volume data"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "collection_name": {
+          "type": "string",
+          "description": "Collection name"
+        },
+        "floor_price": {
+          "type": "number",
+          "description": "Current floor price in SOL"
+        },
+        "floor_price_usd": {
+          "type": "number",
+          "description": "Floor price in USD"
+        },
+        "volume_24h": {
+          "type": "number",
+          "description": "24 hour trading volume"
+        },
+        "total_supply": {
+          "type": "number",
+          "description": "Total NFTs in collection"
+        },
+        "unique_holders": {
+          "type": "number",
+          "description": "Number of unique holders"
+        },
+        "listed_count": {
+          "type": "number",
+          "description": "Currently listed NFTs"
+        },
+        "price_change_24h": {
+          "type": "number",
+          "description": "Price change % in 24h"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "execution": {
+      "timeout": 10,
+      "retry": 2,
+      "cache_ttl": 300
+    },
+    "tags": ["nft", "analytics", "floor-price", "solana", "real-time"],
+    "use_cases": [
+      "NFT trading bots",
+      "Portfolio trackers",
+      "Price alert systems",
+      "Market analysis tools"
+    ],
+    "rate_limits": {
+      "per_minute": 60,
+      "per_hour": 1000,
+      "per_day": 10000
+    },
+    "documentation": {
+      "quick_start": "Simple POST request with collection address to get real-time floor price data",
+      "example_curl": "curl -X POST https://your-api.com/nft-floor -H 'Content-Type: application/json' -d '{\"collection_address\":\"J1S9H3QjnRtBbbuD4HjPV6RpRhwuk4zKbxsnCHuTgh9w\"}'",
+      "response_time": "Average 2-5 seconds",
+      "data_sources": ["Magic Eden API", "Tensor API", "OpenSea API", "On-chain data"]
+    }
+  },
+  "x402_config": {
+    "payment_required": true,
+    "facilitator": "https://x402.org/facilitator",
+    "accept_networks": ["solana-mainnet", "base-mainnet"],
+    "accept_currencies": ["USDC"],
+    "settlement_type": "instant"
+  }
+}
