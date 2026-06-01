@@ -2,48 +2,53 @@
 
 **Pay-per-use Web3 Analytics API** powered by the x402 micropayment protocol.
 
-A collection of 5 production-ready on-chain jobs that deliver real value through micropayments.
+Delivers 5 practical on-chain jobs with real utility through fair micropayments.
 
-## 🎯 What is x402jobs-api?
+## 🎯 About This Project
 
-This project provides high-quality Web3 data and analytics services where users only pay for what they use. Built on the innovative **x402 protocol** (HTTP 402 Payment Required), it enables sustainable open-source monetization for blockchain data.
+x402jobs-api is a production-ready API that provides high-quality Web3 data and analytics. Users only pay for the jobs they use via the **x402 protocol** (HTTP 402 Payment Required) on Solana.
 
-## ✨ Available Jobs
+> **Payment Wallet:** `8UT7S3acWenLuEuqFPwoAGDT6vFGrGiGz3JM6NK3rXKw`  
+> **Network:** Solana Mainnet
 
-| Job                        | Description                              | Price    |
-|---------------------------|------------------------------------------|----------|
-| NFT Floor Tracker         | Real-time floor price tracking           | $0.02   |
-| Token Safety Scorer       | Rugpull & honeypot detection             | $0.05   |
-| DeFi Yield Optimizer      | Smart yield opportunity suggestions      | $0.10   |
-| Whale Wallet Monitor      | Track large wallet movements             | $0.15   |
-| Token Launch Detector     | Early detection of new token launches    | $0.08   |
+## 💎 Available Jobs
+
+| Job                        | Price   | Description                                      |
+|---------------------------|---------|--------------------------------------------------|
+| **NFT Floor Tracker**     | $0.02  | Real-time NFT collection floor price tracking    |
+| **Token Safety Scorer**   | $0.05  | Honeypot & rugpull detection                     |
+| **DeFi Yield Optimizer**  | $0.10  | Smart yield opportunity suggestions              |
+| **Whale Wallet Monitor**  | $0.15  | Track large/smart money wallet movements         |
+| **Token Launch Detector** | $0.08  | Early detection of new token launches            |
 
 ## 🛠 Technologies
 
-- **Python** + **FastAPI**
-- x402 Micropayment Protocol (Solana)
-- Web3.py & Solana RPC
-- Docker & Railway ready
+- Python + FastAPI
+- x402 Micropayment Protocol
+- Solana Web3
+- Railway / Docker deployment
 
-## 🚀 Quick Start
+## ⚡ Quick Start
 
 ```bash
 git clone https://github.com/airhotschild/x402jobs-api.git
 cd x402jobs-api
+
+python -m venv venv
+source venv/bin/activate    # Mac/Linux
+# venv\Scripts\activate     # Windows
+
 pip install -r requirements.txt
-cp .env.example .env
-# Fill in your environment variables
-uvicorn main:app --reload
-Features
-•  JSON-based job configuration (easy to extend)
-•  Clean REST API structure
-•  Docker support
-•  Production-ready error handling
+cp env.example .env
+# Fill your .env variables
+
+python x402jobs_api.py
+Live Demo → https://x402jobs-api-production.up.railway.app
 Roadmap
-•  Add AI-powered sentiment & on-chain analysis jobs
-•  Multi-chain support (Ethereum, Base, etc.)
+•  AI-powered sentiment analysis jobs
+•  Multi-chain support (Ethereum, Base…)
 •  Web dashboard
-•  SDKs for JavaScript & Python
+•  Official SDKs (JS, Python)
 
 Built with ❤️ for the Web3 ecosystem
-I’m actively maintaining and improving this project. Star if you find it useful!
+Actively maintained by @airhotschild
